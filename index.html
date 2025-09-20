@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>C Pointer Puzzle</title>
+  <style>
+    body {
+      font-family: Consolas, monospace;
+      background: #f4f7fa;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 600px;
+    }
+    pre {
+      background: #1e1e1e;
+      color: #dcdcdc;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    input, button {
+      padding: 8px 12px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    .correct { background: #d4edda; color: #155724; }
+    .wrong { background: #f8d7da; color: #721c24; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Tricky C Puzzle</h2>
+    <p>What will be the output of this program?</p>
+    <pre>
+#include &lt;stdio.h&gt;
+int main() {
+    int a = 10;
+    int *p = &amp;a;
+
+    printf("%d %d %d\n", (*p)++, ++a, (*(&amp;a))++);
+    return 0;
+}
+    </pre>
+    <input type="text" id="userAnswer" placeholder="Enter your answer (e.g. 10 12 12)">
+    <button onclick="checkAnswer()">Submit</button>
+    <div id="output" class="result"></div>
+  </div>
+
+  <script>
+    function checkAnswer() {
+      const user = document.getElementById("userAnswer").value.trim();
+      const correct = "10 12 12";
+      const explanation = `
+        - Initially a = 10.<br>
+        - (*p)++ → prints 10, then a = 11.<br>
+        - ++a → increments to 12, prints 12.<br>
+        - (*(&a))++ → prints 12, then a = 13.<br>
+        <b>Final Output: 10 12 12</b>
+      `;
+      let resultBox = document.getElementById("output");
+
+      if (user === correct) {
+        resultBox.className = "result correct";
+        resultBox.innerHTML = "✅ Correct!<br>Your Answer: " + user + "<br>" + explanation;
+      } else {
+        resultBox.className = "result wrong";
+        resultBox.innerHTML = "❌ Wrong!<br>Your Answer: " + user + "<br>Correct Answer: " + correct + "<br>" + explanation;
+      }
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

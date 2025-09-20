@@ -1,0 +1,37 @@
+<script>
+document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const fileInput = document.getElementById('prescription');
+  const file = fileInput.files[0];
+
+  if (!file) {
+    document.getElementById('result').innerText = "Please upload a valid file.";
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+
+
+  
+
+  document.getElementById('result').innerText = "Verifying...";
+
+  const response = await fetch("http://127.0.0.1:8000/verify/", {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await response.json();
+  if (data.status === "success") {
+    document.getElementById('result').innerHTML = `
+      ✅ Verified!<br/>
+      <b>Detected Medicines:</b><br/>
+      ${data.medicines.join("<br/>")}
+    `;
+  } else {
+    document.getElementById('result').innerText = "Error: " + data.message;
+  }
+});
+</script>
